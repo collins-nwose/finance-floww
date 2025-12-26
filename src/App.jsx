@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabase';
 import Coach from './components/Coach';
+import Navbar from './components/Navbar';
 import { CATEGORIES } from './constants';
 import ExpenseModal from './components/ExpenseModal';
 import DebtModal from './components/DebtModal';
@@ -228,15 +229,16 @@ const App = () => {
             ))}
           </div>
         )}
+        {activeTab === 'coach' && (
+       <Coach expenses={monthExpenses} debts={debts} />
+)}
       </div>
 
-      {/* Nav */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 p-3 flex justify-around">
-        <button onClick={() => setActiveTab('home')} className={activeTab === 'home' ? 'text-indigo-600' : 'text-slate-400'}><Home /><span className="text-xs">Home</span></button>
-        <button onClick={() => setActiveTab('analytics')} className={activeTab === 'analytics' ? 'text-indigo-600' : 'text-slate-400'}><TrendingUp /><span className="text-xs">Analytics</span></button>
-        <button onClick={() => setActiveTab('debts')} className={activeTab === 'debts' ? 'text-indigo-600' : 'text-slate-400'}><Users /><span className="text-xs">Debts</span></button>
-      </div>
-
+     {/* Rest of my stuff.. content above... */}
+      
+      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+      
+      {/* Modals below... */}
       {showAddExpense && <ExpenseModal onClose={() => setShowAddExpense(false)} onAdd={addExpense} />}
       {showAddDebt && <DebtModal onClose={() => setShowAddDebt(false)} onAdd={addDebt} />}
     </div>
