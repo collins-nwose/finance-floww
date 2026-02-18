@@ -16,16 +16,18 @@ const anthropic = new Anthropic({
 });
 
 app.post('/api/coach', async (req, res) => {
-  const { expenses, debts } = req.body;
+  //tring to  make the system more interactive ....
+  const { expenses, debts,message} = req.body;
 
   try {
     const response = await anthropic.messages.create({
-   model: "claude-opus-4-6",// The highest intelligence model as of Feb 2026/ The official early 2026 stable name
+   model: "claude-opus-4-6",// The highest intelligence model as of Feb 2026
       max_tokens: 1024,
+      system: "You are a witty, supportive financial coach. Use the user's data to give specific advice. If they ask a general question, answer as a coach.",
       messages: [
         { 
           role: "user", 
-          content: `You are a financial coach. Analyze these monthly expenses: ${JSON.stringify(expenses)} and debts: ${JSON.stringify(debts)}. Give 3 short, witty tips.` 
+          content: `Data: ${JSON.stringify({expenses, debts})}. \n\nUser Message: ${message}`
         }
       ],
     });
