@@ -6,6 +6,7 @@ import { CATEGORIES } from './constants';
 import ExpenseModal from './components/ExpenseModal';
 import DebtModal from './components/DebtModal';
 import Auth from './Auth';
+import SpendingChart from './components/SpendingChart';
 import Analytics from './components/Analytics';
 import { PlusCircle, TrendingUp, Users, Home, DollarSign, Calendar, Trash2, Check, X, Moon, Sun, LogOut } from 'lucide-react';
 
@@ -233,6 +234,9 @@ const App = () => {
        <Coach expenses={monthExpenses} debts={debts} />
 )}
       </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+       <SpendingChart expenses={expenses} />
+</div>
 
      {/* Rest of my stuff.. content above... */}
       

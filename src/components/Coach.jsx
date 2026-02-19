@@ -8,7 +8,7 @@ const Coach = ({ expenses, debts }) => {
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef(null);
 
-  // Auto-scroll to the bottom when a new message arrives
+  // Auto-scroll to the bottom when a new message arrives in ...
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory]);
@@ -21,7 +21,7 @@ const Coach = ({ expenses, debts }) => {
     setInput(""); // Clear input
     setLoading(true);
 
-    // 1. Add your message to the screen
+    // 1. Add your message to the screen...
     setChatHistory(prev => [...prev, { role: 'user', text: userMessage }]);
 
     // 2. Get AI response (we pass the user's specific question now)
@@ -33,61 +33,41 @@ const Coach = ({ expenses, debts }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl flex flex-col h-[500px] shadow-lg border border-indigo-100 dark:border-indigo-900/30 overflow-hidden">
-      {/* Header */}
-      <div className="p-4 border-b dark:border-slate-700 flex items-center gap-2 bg-indigo-50/50 dark:bg-indigo-900/10">
-        <Sparkles className="text-indigo-500 w-5 h-5" />
-        <h2 className="font-bold dark:text-white">AI Financial Coach</h2>
-      </div>
-
-      {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {chatHistory.length === 0 && !loading && (
-          <div className="text-center py-10 text-slate-400 text-sm">
-            Ask me anything about your spending or debts!
-          </div>
-        )}
-        
-        {chatHistory.map((msg, i) => (
-          <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${
-              msg.role === 'user' 
-                ? 'bg-indigo-600 text-white rounded-tr-none' 
-                : 'bg-slate-100 dark:bg-slate-700 dark:text-slate-200 rounded-tl-none'
-            }`}>
-              {msg.text}
-            </div>
-          </div>
-        ))}
-        {loading && (
-          <div className="flex justify-start">
-            <div className="bg-slate-100 dark:bg-slate-700 p-3 rounded-2xl rounded-tl-none flex items-center gap-2">
-              <RefreshCw className="w-4 h-4 text-indigo-500 animate-spin" />
-              <span className="text-xs text-slate-500">Thinking...</span>
-            </div>
-          </div>
-        )}
-        <div ref={scrollRef} />
-      </div>
-
-      {/* Input Area */}
-      <form onSubmit={handleSend} className="p-4 border-t dark:border-slate-700 bg-white dark:bg-slate-800 flex gap-2">
-        <input 
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="e.g. Can I afford a €20 pizza?"
-          className="flex-1 bg-slate-50 dark:bg-slate-900 border-none rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 dark:text-white"
-        />
-        <button 
-          type="submit"
-          disabled={loading}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded-xl transition-colors disabled:opacity-50"
-        >
-          <Send className="w-5 h-5" />
-        </button>
-      </form>
+    // Updated Responsive Container
+<div className="w-full max-w-4xl mx-auto h-[70vh] md:h-[600px] lg:h-[700px] bg-white dark:bg-slate-800 rounded-2xl flex flex-col shadow-lg border border-indigo-100 dark:border-indigo-900/30 overflow-hidden">
+  
+  {/* Header: Compact on mobile, more breathing room on desktop */}
+  <div className="p-3 md:p-4 border-b dark:border-slate-700 flex items-center justify-between bg-indigo-50/50 dark:bg-indigo-900/10">
+    <div className="flex items-center gap-2">
+      <Sparkles className="text-indigo-500 w-5 h-5" />
+      <h2 className="font-bold text-sm md:text-base dark:text-white leading-tight">AI Financial Coach</h2>
     </div>
+    <span className="text-[10px] uppercase font-bold text-slate-400">Live 2026 Analysis</span>
+  </div>
+
+  {/* Chat Area: Flex-1 ensures this grows to fill all space except header/input */}
+  <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 md:space-y-4 scroll-smooth">
+    {/* ... (Existing Message Logic) ... */}
+  </div>
+
+  {/* Input Area: Sticky at bottom, padding adapts to screen size */}
+  <form onSubmit={handleSend} className="p-3 md:p-4 border-t dark:border-slate-700 bg-white dark:bg-slate-800 flex gap-2">
+    <input 
+      type="text"
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      placeholder="Ask about your budget..."
+      className="flex-1 bg-slate-50 dark:bg-slate-900 border-none rounded-xl px-4 py-2 text-sm md:text-base focus:ring-2 focus:ring-indigo-500 dark:text-white outline-none"
+    />
+    <button 
+      type="submit"
+      disabled={loading}
+      className="bg-indigo-600 hover:bg-indigo-700 text-white p-2 md:p-3 rounded-xl transition-all active:scale-95 disabled:opacity-50"
+    >
+      <Send className="w-5 h-5" />
+    </button>
+  </form>
+</div>
   );
 };
 
